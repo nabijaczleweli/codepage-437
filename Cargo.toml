@@ -1,0 +1,16 @@
+[package]
+name = "codepage-437"
+description = "Codepage 437 transcoding for Rust"
+documentation = "https://cdn.rawgit.com/nabijaczleweli/codepage-437/doc/codepage_437/index.html"
+repository = "https://github.com/nabijaczleweli/codepage-437"
+readme = "README.md"
+keywords = ["windows", "dos", "code", "page"]
+categories = ["encoding"]
+license = "MIT"
+# Remember to also update in appveyor.yml
+version = "0.1.0"
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
+exclude = ["*.enc"]
+
+
+[dependencies]
