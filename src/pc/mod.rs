@@ -1,8 +1,7 @@
 //! Conversion to and from [`cp437_DOSLatinUS`](http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT).
 //!
 //! Use the `{Borrow,}FromPcCp437` traits to convert series of cp437 bytes to Unicode,
-//!     the `pc_cp437_to_unicode()` function to decode a single codepoint,
-//!     and `is_pc_cp437_or_ascii()` to check if a cp437 byte is also valid Unicode.
+//! and the `pc_cp437_to_unicode()` function to decode a single codepoint.
 //!
 //! # Examples
 //!
@@ -44,4 +43,4 @@
 
 mod decode;
 
-pub use self::decode::{BorrowFromPcCp437, FromPcCp437, is_pc_cp437_or_ascii, pc_cp437_to_unicode};
+pub use self::decode::{BorrowFromPcCp437, FromPcCp437, pc_cp437_to_unicode};

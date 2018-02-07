@@ -1,7 +1,6 @@
 use codepage_437::pc;
 use std::borrow::Cow;
 
-mod is_pc_cp437_or_ascii;
 mod borrow_from_pc_cp437;
 mod from_pc_cp437;
 
@@ -20,7 +19,18 @@ fn is_borrowed<T: ToOwned + ?Sized>(who: &Cow<T>) -> bool {
 
 #[test]
 fn pc_cp437_to_unicode() {
-    for (&b, c) in ALL_CP437.iter().zip(ALL_UTF8.chars()) {
+    let mut full_size = 0;
+    for (cnt, (&b, c)) in ALL_CP437.iter().zip(ALL_UTF8.chars()).enumerate() {
         assert_eq!(pc::pc_cp437_to_unicode(b), c);
+
+        if b.is_ascii() {
+            assert_eq!(b as char, c);
+        }
+
+        assert_eq!(b as usize, cnt); // Verify test data is consecutive
+        full_size = cnt;
     }
+
+    // Verify test data covers all 256 bytes
+    assert_eq!(full_size, 0xFF);
 }
