@@ -1,5 +1,5 @@
 use self::super::super::super::{VARIANTS_UTF8, ALL_UTF8, is_borrowed};
-use codepage_437::pc::ToPcCp437;
+use codepage_437::ToCp437;
 
 
 #[test]
@@ -8,8 +8,8 @@ fn borrowed_for_ascii() {
     for c in ALL_UTF8.chars().take(0x80) {
         data.push(c);
 
-        assert!(is_borrowed(&data.to_pc_cp437().unwrap()));
-        assert!(is_borrowed(&[c].into_iter().collect::<String>().to_pc_cp437().unwrap()));
+        assert!(is_borrowed(&data.to_cp437().unwrap()));
+        assert!(is_borrowed(&[c].into_iter().collect::<String>().to_cp437().unwrap()));
     }
 }
 
@@ -19,8 +19,8 @@ fn owned_for_beyond_ascii() {
     for c in ALL_UTF8.chars().skip(0x80).chain(VARIANTS_UTF8.chars()) {
         data.push(c);
 
-        assert!(!is_borrowed(&data.to_pc_cp437().unwrap()));
-        assert!(!is_borrowed(&[c].into_iter().collect::<String>().to_pc_cp437().unwrap()));
+        assert!(!is_borrowed(&data.to_cp437().unwrap()));
+        assert!(!is_borrowed(&[c].into_iter().collect::<String>().to_cp437().unwrap()));
     }
 }
 
@@ -38,7 +38,7 @@ fn owned_for_both() {
         data.push(c);
         data.push(new_beyond);
 
-        assert!(!is_borrowed(&data.to_pc_cp437().unwrap()));
-        assert!(!is_borrowed(&[c, new_beyond].into_iter().collect::<String>().to_pc_cp437().unwrap()));
+        assert!(!is_borrowed(&data.to_cp437().unwrap()));
+        assert!(!is_borrowed(&[c, new_beyond].into_iter().collect::<String>().to_cp437().unwrap()));
     }
 }

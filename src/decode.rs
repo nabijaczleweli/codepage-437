@@ -8,7 +8,7 @@ use std::str;
 /// # Examples
 ///
 /// ```
-/// # use codepage_437::pc::FromPcCp437;
+/// # use codepage_437::FromCp437;
 /// let cp437 = vec![0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x20, 0x6E, 0x65, 0x77, 0x73, 0x20, 0x72, 0x65,
 ///                  0x70, 0x6F, 0x72, 0x74, 0x73, 0x20, 0x74, 0x68, 0x61, 0x74, 0x20, 0x74, 0x68,
 ///                  0x65, 0x20, 0x9E, 0xAB, 0x20, 0x6D, 0x69, 0x6C, 0x6C, 0x69, 0x6F, 0x6E, 0x20,
@@ -19,49 +19,49 @@ use std::str;
 ///                  0x6E, 0x64, 0x20, 0x39, 0x3A, 0x30, 0x30, 0x61, 0x6D, 0x2E];
 /// let unicode = "Local news reports that the ₧½ million Air Melanesiæ aircraft has crashed this morning around 9:00am.";
 ///
-/// assert_eq!(String::from_pc_cp437(cp437), unicode);  // cp437 is moved out of
+/// assert_eq!(String::from_cp437(cp437), unicode);  // cp437 is moved out of
 /// ```
-pub trait FromPcCp437<T: Sized> {
+pub trait FromCp437<T: Sized> {
     /// Do the conversion.
-    fn from_pc_cp437(cp437: T) -> Self;
+    fn from_cp437(cp437: T) -> Self;
 }
 
-macro_rules! from_pc_cp437_slice_impl {
+macro_rules! from_cp437_slice_impl {
     ($($l:expr)*) => ($(
-        impl FromPcCp437<[u8; $l]> for String {
-            fn from_pc_cp437(cp437: [u8; $l]) -> Self {
-                from_pc_cp437_slice_impl(&cp437)
+        impl FromCp437<[u8; $l]> for String {
+            fn from_cp437(cp437: [u8; $l]) -> Self {
+                from_cp437_slice_impl(&cp437)
             }
         }
     )*)
 }
 
-impl FromPcCp437<Vec<u8>> for String {
-    fn from_pc_cp437(cp437: Vec<u8>) -> Self {
+impl FromCp437<Vec<u8>> for String {
+    fn from_cp437(cp437: Vec<u8>) -> Self {
         if cp437.iter().all(|c| c.is_ascii()) {
             String::from_utf8(cp437).unwrap()
         } else {
-            String::from_iter(cp437.into_iter().map(pc_cp437_to_unicode))
+            String::from_iter(cp437.into_iter().map(cp437_to_unicode))
         }
     }
 }
 
-impl FromPcCp437<[u8; 0]> for String {
-    fn from_pc_cp437(_: [u8; 0]) -> Self {
+impl FromCp437<[u8; 0]> for String {
+    fn from_cp437(_: [u8; 0]) -> Self {
         String::new()
     }
 }
 
-from_pc_cp437_slice_impl!(    1  2  3  4  5  6  7  8  9
+from_cp437_slice_impl!(    1  2  3  4  5  6  7  8  9
                           10 11 12 13 14 15 16 17 18 19
                           20 21 22 23 24 25 26 27 28 29
                           30 31 32);
 
-fn from_pc_cp437_slice_impl(cp437: &[u8]) -> String {
+fn from_cp437_slice_impl(cp437: &[u8]) -> String {
     if cp437.iter().all(|c| c.is_ascii()) {
         String::from_utf8(cp437.to_vec()).unwrap()
     } else {
-        String::from_iter(cp437.iter().map(|&c| pc_cp437_to_unicode(c)))
+        String::from_iter(cp437.iter().map(|&c| cp437_to_unicode(c)))
     }
 }
 
@@ -73,7 +73,7 @@ fn from_pc_cp437_slice_impl(cp437: &[u8]) -> String {
 /// # Examples
 ///
 /// ```
-/// # use codepage_437::pc::BorrowFromPcCp437;
+/// # use codepage_437::BorrowFromCp437;
 /// # use std::borrow::Cow;
 /// let cp437 = [0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x20, 0x6E, 0x65, 0x77, 0x73, 0x20, 0x72, 0x65,
 ///              0x70, 0x6F, 0x72, 0x74, 0x73, 0x20, 0x74, 0x68, 0x61, 0x74, 0x20, 0x74, 0x68,
@@ -85,39 +85,39 @@ fn from_pc_cp437_slice_impl(cp437: &[u8]) -> String {
 ///              0x6E, 0x64, 0x20, 0x39, 0x3A, 0x30, 0x30, 0x61, 0x6D, 0x2E];
 /// let unicode = "Local news reports that the ₧½ million Air Melanesiæ aircraft has crashed this morning around 9:00am.";
 ///
-/// assert_eq!(Cow::borrow_from_pc_cp437(&cp437[..]), String::borrow_from_pc_cp437(&cp437[..]));
-/// assert_eq!(Cow::borrow_from_pc_cp437(&cp437[..]), unicode);
+/// assert_eq!(Cow::borrow_from_cp437(&cp437[..]), String::borrow_from_cp437(&cp437[..]));
+/// assert_eq!(Cow::borrow_from_cp437(&cp437[..]), unicode);
 /// ```
-pub trait BorrowFromPcCp437<'c, T: ?Sized> {
+pub trait BorrowFromCp437<'c, T: ?Sized> {
     /// Do the conversion.
-    fn borrow_from_pc_cp437(cp437: &'c T) -> Self;
+    fn borrow_from_cp437(cp437: &'c T) -> Self;
 }
 
-impl<'c, T: AsRef<[u8]> + ?Sized> BorrowFromPcCp437<'c, T> for Cow<'c, str> {
-    fn borrow_from_pc_cp437(cp437: &'c T) -> Self {
-        borrow_from_pc_cp437_cow_slice_impl(cp437.as_ref())
+impl<'c, T: AsRef<[u8]> + ?Sized> BorrowFromCp437<'c, T> for Cow<'c, str> {
+    fn borrow_from_cp437(cp437: &'c T) -> Self {
+        borrow_from_cp437_cow_slice_impl(cp437.as_ref())
     }
 }
 
-impl<'c, T: AsRef<[u8]> + ?Sized> BorrowFromPcCp437<'c, T> for String {
-    fn borrow_from_pc_cp437(cp437: &'c T) -> Self {
-        borrow_from_pc_cp437_string_slice_impl(cp437.as_ref())
+impl<'c, T: AsRef<[u8]> + ?Sized> BorrowFromCp437<'c, T> for String {
+    fn borrow_from_cp437(cp437: &'c T) -> Self {
+        borrow_from_cp437_string_slice_impl(cp437.as_ref())
     }
 }
 
-fn borrow_from_pc_cp437_cow_slice_impl(cp437: &[u8]) -> Cow<str> {
+fn borrow_from_cp437_cow_slice_impl(cp437: &[u8]) -> Cow<str> {
     if cp437.iter().all(|c| c.is_ascii()) {
         Cow::Borrowed(str::from_utf8(&cp437[..]).unwrap())
     } else {
-        Cow::Owned(String::from_iter(cp437.iter().map(|&c| pc_cp437_to_unicode(c))))
+        Cow::Owned(String::from_iter(cp437.iter().map(|&c| cp437_to_unicode(c))))
     }
 }
 
-fn borrow_from_pc_cp437_string_slice_impl(cp437: &[u8]) -> String {
+fn borrow_from_cp437_string_slice_impl(cp437: &[u8]) -> String {
     if cp437.iter().all(|c| c.is_ascii()) {
         String::from_utf8(cp437.to_vec()).unwrap()
     } else {
-        String::from_iter(cp437.iter().map(|&c| pc_cp437_to_unicode(c)))
+        String::from_iter(cp437.iter().map(|&c| cp437_to_unicode(c)))
     }
 }
 
@@ -130,11 +130,11 @@ fn borrow_from_pc_cp437_string_slice_impl(cp437: &[u8]) -> String {
 /// # Examples
 ///
 /// ```
-/// # use codepage_437::pc::pc_cp437_to_unicode;
-/// assert_eq!(pc_cp437_to_unicode(0x41), 'A');
-/// assert_eq!(pc_cp437_to_unicode(0x91), 'æ');  // LATIN SMALL LIGATURE AE
+/// # use codepage_437::cp437_to_unicode;
+/// assert_eq!(cp437_to_unicode(0x41), 'A');
+/// assert_eq!(cp437_to_unicode(0x91), 'æ');  // LATIN SMALL LIGATURE AE
 /// ```
-pub fn pc_cp437_to_unicode(cp437: u8) -> char {
+pub fn cp437_to_unicode(cp437: u8) -> char {
     match cp437 {
         0x80 => '\u{00C7}', // LATIN CAPITAL LETTER C WITH CEDILLA
         0x81 => '\u{00FC}', // LATIN SMALL LETTER U WITH DIAERESIS

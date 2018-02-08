@@ -1,5 +1,5 @@
 use self::super::super::super::is_borrowed;
-use codepage_437::pc::BorrowFromPcCp437;
+use codepage_437::BorrowFromCp437;
 use std::borrow::Cow;
 
 
@@ -10,8 +10,8 @@ fn borrowed_for_ascii_subset() {
         let dlen = data.len();
         data.push(dlen as u8);
 
-        assert!(is_borrowed(&Cow::borrow_from_pc_cp437(&data)));
-        assert!(is_borrowed(&Cow::borrow_from_pc_cp437(&[*data.last().unwrap()])));
+        assert!(is_borrowed(&Cow::borrow_from_cp437(&data)));
+        assert!(is_borrowed(&Cow::borrow_from_cp437(&[*data.last().unwrap()])));
     }
 }
 
@@ -22,8 +22,8 @@ fn owned_for_ascii_superset() {
         let dlen = data.len();
         data.push((dlen + 0x80) as u8);
 
-        assert!(!is_borrowed(&Cow::borrow_from_pc_cp437(&data)));
-        assert!(!is_borrowed(&Cow::borrow_from_pc_cp437(&[*data.last().unwrap()])));
+        assert!(!is_borrowed(&Cow::borrow_from_cp437(&data)));
+        assert!(!is_borrowed(&Cow::borrow_from_cp437(&[*data.last().unwrap()])));
     }
 }
 
@@ -39,7 +39,7 @@ fn owned_for_both() {
         data.push((0x80 + (superset_idx % (0xFF - 0x80))) as u8);
         superset_idx += 1;
 
-        assert!(!is_borrowed(&Cow::borrow_from_pc_cp437(&data)));
-        assert!(!is_borrowed(&Cow::borrow_from_pc_cp437(&[data[dlen], data[dlen + 1]])));
+        assert!(!is_borrowed(&Cow::borrow_from_cp437(&data)));
+        assert!(!is_borrowed(&Cow::borrow_from_cp437(&[data[dlen], data[dlen + 1]])));
     }
 }

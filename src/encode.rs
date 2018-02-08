@@ -3,9 +3,9 @@ use std::borrow::Cow;
 
 /// Errors which can occur when attempting to interpret a string as a sequence of cp437 codepoints.
 ///
-/// As such, the `into_pc_cp437` family of functions and methods make use of this error, for example.
+/// As such, the `into_cp437` family of functions and functions make use of this error, for example.
 #[derive(Debug, Copy, Clone, Hash, Eq, Ord, PartialEq, PartialOrd)]
-pub struct PcCp437Error {
+pub struct Cp437Error {
     /// Returns the index in the given string up to which valid cp437 was verified.
     ///
     /// It is the maximum index such that `input[..index].to_cp_437()` would return `Ok(_)`.
@@ -13,12 +13,12 @@ pub struct PcCp437Error {
     /// # Examples
     ///
     /// ```
-    /// # use codepage_437::pc::ToPcCp437;
+    /// # use codepage_437::ToCp437;
     /// // some unrepresentable characters, in a &str
     /// let word = "Eżektor";
     ///
-    /// // ToPcCp437::to_pc_cp437() returns a PcCp437Error
-    /// let error = word.to_pc_cp437().unwrap_err();
+    /// // ToCp437::to_cp437() returns a Cp437Error
+    /// let error = word.to_cp437().unwrap_err();
     ///
     /// // the second character is unrepresentable here
     /// assert_eq!(error.representable_up_to, 1);
@@ -28,45 +28,45 @@ pub struct PcCp437Error {
 
 /// A possible error value when converting a `String` into a cp437 byte vector.
 ///
-/// This type is the error type for the [`into_pc_cp437()`](TODO) function on [`IntoPcCp437`](TODO). It
-/// is designed in such a way to carefully avoid reallocations: the
-/// [`into_string`](TODO) method will give back the String that was used in the
-/// conversion attempt.
+/// This type is the error type for the [`into_cp437()`](trait.IntoCp437.html#tymethod.into_cp437)
+/// function on [`IntoCp437`](trait.IntoCp437.html). It is designed in such a way to carefully avoid reallocations:
+/// the [`into_string()`](#method.into_string) function will give back the String that was used
+/// in the conversion attempt.
 ///
-/// The [`PcCp437Error`](TODO) type represents an error that may
+/// The [`Cp437Error`](struct.Cp437Error.html) type represents an error that may
 /// occur when converting a `&str` to a sequence of `u8`s. In this sense, it's
-/// an analogue to `IntoPcCp437Error`, and you can get one from a `IntoPcCp437Error`
-/// through the [`pc_cp437_error()`](TODO) function.
+/// an analogue to `IntoCp437Error`, and you can get one from a `IntoCp437Error`
+/// through the [`cp437_error()`](#method.cp437_error) function.
 ///
 /// # Examples
 ///
 /// ```
-/// # use codepage_437::pc::IntoPcCp437;
+/// # use codepage_437::IntoCp437;
 /// // some unrepresentable chracters, in a String
 /// let word = "Eżektor".to_string();
 ///
-/// let value = word.into_pc_cp437();
+/// let value = word.into_cp437();
 ///
 /// assert!(value.is_err());
 /// assert_eq!(value.unwrap_err().into_string(), "Eżektor".to_string());
 /// ```
 #[derive(Debug, Clone, Hash, Eq, Ord, PartialEq, PartialOrd)]
-pub struct IntoPcCp437Error {
+pub struct IntoCp437Error {
     string: String,
-    error: PcCp437Error,
+    error: Cp437Error,
 }
 
-impl IntoPcCp437Error {
+impl IntoCp437Error {
     /// Returns a `&str` that was attempted to convert to cp437.
     ///
     /// # Examples
     ///
     /// ```
-    /// # use codepage_437::pc::IntoPcCp437;
+    /// # use codepage_437::IntoCp437;
     /// // some unrepresentable chracters, in a String
     /// let word = "Eżektor".to_string();
     ///
-    /// let value = word.into_pc_cp437();
+    /// let value = word.into_cp437();
     ///
     /// assert_eq!(value.unwrap_err().as_str(), "Eżektor");
     /// ```
@@ -76,18 +76,18 @@ impl IntoPcCp437Error {
 
     /// Returns the `String` that was attempted to convert to cp437.
     ///
-    /// This method is carefully constructed to avoid allocation. It will
+    /// This function is carefully constructed to avoid allocation. It will
     /// consume the error, moving out the string, so that a copy of the string
     /// does not need to be made.
     ///
     /// # Examples
     ///
     /// ```
-    /// # use codepage_437::pc::IntoPcCp437;
+    /// # use codepage_437::IntoCp437;
     /// // some unrepresentable chracters, in a String
     /// let word = "Eżektor".to_string();
     ///
-    /// let value = word.into_pc_cp437();
+    /// let value = word.into_cp437();
     ///
     /// assert_eq!(value.unwrap_err().into_string(), "Eżektor".to_string());
     /// ```
@@ -95,26 +95,26 @@ impl IntoPcCp437Error {
         self.string
     }
 
-    /// Fetch a `PcCp437Error` to get more details about the conversion failure.
+    /// Fetch a `Cp437Error` to get more details about the conversion failure.
     ///
-    /// The [`PcCp437Error`](TODO) type represents an error that may
+    /// The [`Cp437Error`](struct.Cp437Error.html) type represents an error that may
     /// occur when converting a `&str` to a sequence of `u8`s. In this sense, it's
-    /// an analogue to `IntoPcCp437Error`. See its documentation for more details
+    /// an analogue to `IntoCp437Error`. See its documentation for more details
     /// on using it.
     ///
     /// # Examples
     ///
     /// ```
-    /// # use codepage_437::pc::IntoPcCp437;
+    /// # use codepage_437::IntoCp437;
     /// // some unrepresentable chracters, in a String
     /// let word = "Eżektor".to_string();
     ///
-    /// let error = word.into_pc_cp437().unwrap_err().pc_cp437_error();
+    /// let error = word.into_cp437().unwrap_err().cp437_error();
     ///
     /// // the first character is unrepresentable here
     /// assert_eq!(error.representable_up_to, 1);
     /// ```
-    pub fn pc_cp437_error(&self) -> PcCp437Error {
+    pub fn cp437_error(&self) -> Cp437Error {
         self.error
     }
 }
@@ -127,7 +127,7 @@ impl IntoPcCp437Error {
 /// Good:
 ///
 /// ```
-/// # use codepage_437::pc::IntoPcCp437;
+/// # use codepage_437::IntoCp437;
 /// let cp437 = vec![0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x20, 0x6E, 0x65, 0x77, 0x73, 0x20, 0x72, 0x65,
 ///                  0x70, 0x6F, 0x72, 0x74, 0x73, 0x20, 0x74, 0x68, 0x61, 0x74, 0x20, 0x74, 0x68,
 ///                  0x65, 0x20, 0x9E, 0xAB, 0x20, 0x6D, 0x69, 0x6C, 0x6C, 0x69, 0x6F, 0x6E, 0x20,
@@ -139,35 +139,35 @@ impl IntoPcCp437Error {
 /// let unicode =
 ///     "Local news reports that the ₧½ million Air Melanesiæ aircraft has crashed this morning around 9:00am.".to_string();
 ///
-/// assert_eq!(unicode.into_pc_cp437(), Ok(cp437));  // unicode is moved out of
+/// assert_eq!(unicode.into_cp437(), Ok(cp437));  // unicode is moved out of
 /// ```
 ///
 /// Unrepresentable:
 ///
 /// ```
-/// # use codepage_437::pc::IntoPcCp437;
+/// # use codepage_437::IntoCp437;
 /// // Ż cannot be represented in cp437
 /// let unicode = "Jurek je żurek w żupanie.".to_string();
 ///
-/// let error = unicode.into_pc_cp437().unwrap_err();           // unicode is moved out of
+/// let error = unicode.into_cp437().unwrap_err();           // unicode is moved out of
 /// assert_eq!(error.as_str(), "Jurek je żurek w żupanie.");
-/// assert_eq!(error.pc_cp437_error().representable_up_to, 9);
+/// assert_eq!(error.cp437_error().representable_up_to, 9);
 ///
-/// let unicode = error.into_string();                          // unicode now the same as original
+/// let unicode = error.into_string();                       // unicode now the same as original
 /// # assert_eq!(unicode, "Jurek je żurek w żupanie.");
 /// ```
-pub trait IntoPcCp437<T> {
+pub trait IntoCp437<T> {
     /// Do the conversion.
-    fn into_pc_cp437(self) -> Result<T, IntoPcCp437Error>;
+    fn into_cp437(self) -> Result<T, IntoCp437Error>;
 }
 
-impl IntoPcCp437<Vec<u8>> for String {
-    fn into_pc_cp437(self) -> Result<Vec<u8>, IntoPcCp437Error> {
+impl IntoCp437<Vec<u8>> for String {
+    fn into_cp437(self) -> Result<Vec<u8>, IntoCp437Error> {
         if self.is_ascii() {
             Ok(self.into_bytes())
         } else {
-            to_pc_cp437_impl_meat(&self).map_err(|e| {
-                IntoPcCp437Error {
+            to_cp437_impl_meat(&self).map_err(|e| {
+                IntoCp437Error {
                     string: self,
                     error: e,
                 }
@@ -184,7 +184,7 @@ impl IntoPcCp437<Vec<u8>> for String {
 /// Good:
 ///
 /// ```
-/// # use codepage_437::pc::ToPcCp437;
+/// # use codepage_437::ToCp437;
 /// let cp437 = [0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x20, 0x6E, 0x65, 0x77, 0x73, 0x20, 0x72, 0x65,
 ///              0x70, 0x6F, 0x72, 0x74, 0x73, 0x20, 0x74, 0x68, 0x61, 0x74, 0x20, 0x74, 0x68,
 ///              0x65, 0x20, 0x9E, 0xAB, 0x20, 0x6D, 0x69, 0x6C, 0x6C, 0x69, 0x6F, 0x6E, 0x20,
@@ -195,53 +195,53 @@ impl IntoPcCp437<Vec<u8>> for String {
 ///              0x6E, 0x64, 0x20, 0x39, 0x3A, 0x30, 0x30, 0x61, 0x6D, 0x2E];
 /// let unicode = "Local news reports that the ₧½ million Air Melanesiæ aircraft has crashed this morning around 9:00am.";
 ///
-/// assert_eq!(unicode.to_pc_cp437(), Ok(cp437[..].into()));
+/// assert_eq!(unicode.to_cp437(), Ok(cp437[..].into()));
 /// ```
 ///
 /// Unrepresentable:
 ///
 /// ```
-/// # use codepage_437::pc::ToPcCp437;
+/// # use codepage_437::ToCp437;
 /// // Ż cannot be represented in cp437
 /// let unicode = "Jurek je żurek w żupanie.";
 ///
-/// let error = unicode.to_pc_cp437().unwrap_err();
+/// let error = unicode.to_cp437().unwrap_err();
 /// assert_eq!(error.representable_up_to, 9);
 /// ```
-pub trait ToPcCp437<'s, T> {
+pub trait ToCp437<'s, T> {
     /// Do the conversion.
-    fn to_pc_cp437(&'s self) -> Result<T, PcCp437Error>;
+    fn to_cp437(&'s self) -> Result<T, Cp437Error>;
 }
 
-impl<'s> ToPcCp437<'s, Cow<'s, [u8]>> for str {
-    fn to_pc_cp437(&'s self) -> Result<Cow<'s, [u8]>, PcCp437Error> {
-        to_pc_cp437_cow_impl(&self)
+impl<'s> ToCp437<'s, Cow<'s, [u8]>> for str {
+    fn to_cp437(&'s self) -> Result<Cow<'s, [u8]>, Cp437Error> {
+        to_cp437_cow_impl(&self)
     }
 }
 
-impl<'s, S: AsRef<str>> ToPcCp437<'s, Cow<'s, [u8]>> for S {
-    fn to_pc_cp437(&'s self) -> Result<Cow<'s, [u8]>, PcCp437Error> {
-        to_pc_cp437_cow_impl(self.as_ref())
+impl<'s, S: AsRef<str>> ToCp437<'s, Cow<'s, [u8]>> for S {
+    fn to_cp437(&'s self) -> Result<Cow<'s, [u8]>, Cp437Error> {
+        to_cp437_cow_impl(self.as_ref())
     }
 }
 
 
-fn to_pc_cp437_cow_impl(whom: &str) -> Result<Cow<[u8]>, PcCp437Error> {
+fn to_cp437_cow_impl(whom: &str) -> Result<Cow<[u8]>, Cp437Error> {
     if whom.is_ascii() {
         Ok(Cow::Borrowed(whom.as_bytes()))
     } else {
-        to_pc_cp437_impl_meat(whom).map(Cow::Owned)
+        to_cp437_impl_meat(whom).map(Cow::Owned)
     }
 }
 
-fn to_pc_cp437_impl_meat(whom: &str) -> Result<Vec<u8>, PcCp437Error> {
+fn to_cp437_impl_meat(whom: &str) -> Result<Vec<u8>, Cp437Error> {
     let mut result = Vec::with_capacity(whom.chars().count());
 
     for c in whom.chars() {
-        if let Some(b) = unicode_to_pc_cp437(c) {
+        if let Some(b) = unicode_to_cp437(c) {
             result.push(b);
         } else {
-            return Err(PcCp437Error { representable_up_to: result.len() });
+            return Err(Cp437Error { representable_up_to: result.len() });
         }
     }
 
@@ -258,13 +258,13 @@ fn to_pc_cp437_impl_meat(whom: &str) -> Result<Vec<u8>, PcCp437Error> {
 /// # Examples
 ///
 /// ```
-/// # use codepage_437::pc::unicode_to_pc_cp437;
-/// assert_eq!(unicode_to_pc_cp437('A'), Some(0x41));
-/// assert_eq!(unicode_to_pc_cp437('æ'), Some(0x91));  // LATIN SMALL LIGATURE AE
+/// # use codepage_437::unicode_to_cp437;
+/// assert_eq!(unicode_to_cp437('A'), Some(0x41));
+/// assert_eq!(unicode_to_cp437('æ'), Some(0x91));  // LATIN SMALL LIGATURE AE
 ///
-/// assert_eq!(unicode_to_pc_cp437('ź'), None);        // LATIN SMALL LETTER Z WITH ACUTE
+/// assert_eq!(unicode_to_cp437('ź'), None);        // LATIN SMALL LETTER Z WITH ACUTE
 /// ```
-pub fn unicode_to_pc_cp437(unicode: char) -> Option<u8> {
+pub fn unicode_to_cp437(unicode: char) -> Option<u8> {
     Some(match unicode {
         '\u{00C7}' => 0x80, // LATIN CAPITAL LETTER C WITH CEDILLA
         '\u{00FC}' => 0x81, // LATIN SMALL LETTER U WITH DIAERESIS

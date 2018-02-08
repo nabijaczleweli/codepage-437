@@ -1,15 +1,15 @@
 use self::super::{ALL_CP437, ALL_UTF8};
-use codepage_437::pc;
+use codepage_437;
 
-mod borrow_from_pc_cp437;
-mod from_pc_cp437;
+mod borrow_from_cp437;
+mod from_cp437;
 
 
 #[test]
-fn pc_cp437_to_unicode() {
+fn cp437_to_unicode() {
     let mut full_size = 0;
     for (cnt, (&b, c)) in ALL_CP437.iter().zip(ALL_UTF8.chars()).enumerate() {
-        assert_eq!(pc::pc_cp437_to_unicode(b), c);
+        assert_eq!(codepage_437::cp437_to_unicode(b), c);
 
         if b.is_ascii() {
             assert_eq!(b as char, c);
