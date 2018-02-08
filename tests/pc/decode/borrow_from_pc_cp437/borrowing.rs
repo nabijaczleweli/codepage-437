@@ -1,5 +1,5 @@
+use self::super::super::super::is_borrowed;
 use codepage_437::pc::BorrowFromPcCp437;
-use self::super::super::is_borrowed;
 use std::borrow::Cow;
 
 

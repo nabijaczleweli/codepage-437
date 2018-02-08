@@ -22,6 +22,7 @@ use std::str;
 /// assert_eq!(String::from_pc_cp437(cp437), unicode);  // cp437 is moved out of
 /// ```
 pub trait FromPcCp437<T: Sized> {
+    /// Do the conversion.
     fn from_pc_cp437(cp437: T) -> Self;
 }
 
@@ -88,6 +89,7 @@ fn from_pc_cp437_slice_impl(cp437: &[u8]) -> String {
 /// assert_eq!(Cow::borrow_from_pc_cp437(&cp437[..]), unicode);
 /// ```
 pub trait BorrowFromPcCp437<'c, T: ?Sized> {
+    /// Do the conversion.
     fn borrow_from_pc_cp437(cp437: &'c T) -> Self;
 }
 
