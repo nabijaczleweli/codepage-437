@@ -15,3 +15,5 @@
 !tests/**
 !test-data
 !test-data/**
+!dialect-specs
+!dialect-specs/**

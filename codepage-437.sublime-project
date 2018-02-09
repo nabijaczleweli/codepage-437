@@ -27,6 +27,11 @@
 		},
 		{
 			"follow_symlinks": true,
+			"name": "Dialects",
+			"path": "dialect-specs"
+		},
+		{
+			"follow_symlinks": true,
 			"name": "Tests",
 			"path": "tests"
 		},

@@ -90,6 +90,8 @@
 
 mod decode;
 mod encode;
+mod dialect;
 
+pub use self::dialect::*;
 pub use self::decode::{BorrowFromCp437, FromCp437, cp437_to_unicode};
 pub use self::encode::{IntoCp437Error, Cp437Error, IntoCp437, ToCp437, unicode_to_cp437};

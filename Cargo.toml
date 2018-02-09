@@ -7,10 +7,12 @@ readme = "README.md"
 keywords = ["windows", "dos", "code", "page"]
 categories = ["encoding"]
 license = "MIT"
+build = "build.rs"
 # Remember to also update in appveyor.yml
 version = "0.1.0"
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
 exclude = ["*.enc"]
 
 
-[dependencies]
+[build-dependencies]
+csv = "1.0.0-beta.5"
