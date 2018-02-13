@@ -1,5 +1,6 @@
-use self::super::super::super::{VARIANTS_CP437, VARIANTS_UTF8, ALL_CP437, ALL_UTF8};
+use self::super::super::super::{VARIANTS_CP437, VARIANTS_UTF8, ALL_UTF8};
 use codepage_437::{CP437_CONTROL, Cp437Error, ToCp437};
+use self::super::super::super::super::ALL_CP437;
 
 
 #[test]

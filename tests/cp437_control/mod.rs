@@ -4,7 +4,6 @@ mod decode;
 mod encode;
 
 
-const ALL_CP437: &[u8] = include_bytes!("../../test-data/cp437_control/all.cp437");
 const ALL_UTF8: &str = include_str!("../../test-data/cp437_control/all.utf8");
 
 const VARIANTS_CP437: &[u8] = include_bytes!("../../test-data/cp437_control/variants.cp437");

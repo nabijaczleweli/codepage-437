@@ -78,7 +78,6 @@ fn main() {
 
         let cp437_overlap_func = format!("{}_cp437_overlaps", dialect_name_func);
         let unicode_overlap_func = format!("{}_unicode_overlaps", dialect_name_func);
-        let decode_func = format!("{}_decode", dialect_name_func);
         let encode_func = format!("{}_encode", dialect_name_func);
 
         let values_tsv = dir.path().join("values.tsv");
@@ -112,17 +111,13 @@ fn main() {
         let primary_mappings = Mapping::from_mappings(&values_tsv);
         let variant_mappings = Mapping::from_mappings(&variants_tsv);
 
-        writeln!(specs_rs, "").unwrap();
-        writeln!(specs_rs, "fn {}(cp437: u8) -> char {{", decode_func).unwrap();
-        writeln!(specs_rs, "\tmatch cp437 {{").unwrap();
-        for &Mapping { cp437, unicode, ref comment } in &primary_mappings {
-            writeln!(specs_rs, "\t\t0x{:X} => \'\\u{{{:06X}}}\',  // {}", cp437, unicode as u32, comment).unwrap();
+        let mut decode_array = vec![('\x00', String::new()); 256];
+        for i in 0..256 {
+            decode_array[i] = (i as u8 as char, String::new());
         }
-        writeln!(specs_rs, "").unwrap();
-        writeln!(specs_rs, "\t\tb => b as char,").unwrap();
-        writeln!(specs_rs, "\t}}").unwrap();
-        writeln!(specs_rs, "}}").unwrap();
-        writeln!(specs_rs, "").unwrap();
+        for &Mapping { cp437, unicode, ref comment } in &primary_mappings {
+            decode_array[cp437 as usize] = (unicode, comment.clone());
+        }
 
         writeln!(specs_rs, "").unwrap();
         writeln!(specs_rs, "fn {}(unicode: char) -> Option<u8> {{", encode_func).unwrap();
@@ -143,10 +138,20 @@ fn main() {
         }
 
         writeln!(specs_rs, "pub static {}: Cp437Dialect = Cp437Dialect {{", dialect_name_type).unwrap();
+        writeln!(specs_rs, "\tcp437_to_unicode: [").unwrap();
+        for &(unicode, ref comment) in decode_array.iter() {
+            write!(specs_rs, "\t\t\'\\u{{{:06X}}}\',", unicode as u32).unwrap();
+            if !comment.is_empty() {
+                writeln!(specs_rs, "  // {}", comment).unwrap();
+            } else {
+                writeln!(specs_rs, "").unwrap();
+            }
+        }
+        writeln!(specs_rs, "\t],").unwrap();
+        writeln!(specs_rs, "").unwrap();
         writeln!(specs_rs, "\toverlap_unicode: {},", unicode_overlap_func).unwrap();
         writeln!(specs_rs, "\toverlap_cp437: {},", cp437_overlap_func).unwrap();
         writeln!(specs_rs, "").unwrap();
-        writeln!(specs_rs, "\tdecode: {},", decode_func).unwrap();
         writeln!(specs_rs, "\tencode: {},", encode_func).unwrap();
         writeln!(specs_rs, "}};").unwrap();
 

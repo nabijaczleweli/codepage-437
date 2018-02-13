@@ -1,5 +1,6 @@
-use self::super::super::super::{ALL_CP437, ALL_UTF8};
 use codepage_437::{CP437_CONTROL, BorrowFromCp437};
+use self::super::super::super::super::ALL_CP437;
+use self::super::super::super::ALL_UTF8;
 use std::borrow::Cow;
 
 

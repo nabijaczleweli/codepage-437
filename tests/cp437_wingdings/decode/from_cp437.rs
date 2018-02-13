@@ -1,4 +1,4 @@
-use codepage_437::{CP437_CONTROL, FromCp437};
+use codepage_437::{CP437_WINGDINGS, FromCp437};
 use self::super::super::super::ALL_CP437;
 use self::super::super::ALL_UTF8;
 
@@ -9,7 +9,7 @@ macro_rules! array_test {
 		fn $test_name() {
 			let mut buf = [0u8; $sz];
 			buf.copy_from_slice(&ALL_CP437[..$sz]);
-			assert_eq!(String::from_cp437(buf, &CP437_CONTROL), ALL_UTF8.chars().take($sz).collect::<String>());
+			assert_eq!(String::from_cp437(buf, &CP437_WINGDINGS), ALL_UTF8.chars().take($sz).collect::<String>());
 		}
 	}
 }
@@ -17,7 +17,7 @@ macro_rules! array_test {
 
 #[test]
 fn vec() {
-    assert_eq!(String::from_cp437(ALL_CP437.to_vec(), &CP437_CONTROL), ALL_UTF8);
+    assert_eq!(String::from_cp437(ALL_CP437.to_vec(), &CP437_WINGDINGS), ALL_UTF8);
 }
 
 
