@@ -48,11 +48,11 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/codepage_437/pc.rs.html#1-314' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/codepage_437/pc/mod.rs.html#1-46' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Conversion to and from <a href="http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT"><code>cp437_DOSLatinUS</code></a>.</p>
 
 <p>Use the <code>{Borrow,}FromPcCp437</code> traits to convert series of cp437 bytes to Unicode,
-    the <code>pc_cp437_to_unicode()</code> function</p>
+and the <code>pc_cp437_to_unicode()</code> function to decode a single codepoint.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>Borrowing from a buffer:</p>
@@ -92,13 +92,6 @@
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.is_pc_cp437_or_ascii.html"
-                                  title='fn codepage_437::pc::is_pc_cp437_or_ascii'>is_pc_cp437_or_ascii</a></td>
-                           <td class='docblock-short'>
-                                <p>Check, whether the specified cp437 has the same representation in ASCII.</p>
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.pc_cp437_to_unicode.html"
                                   title='fn codepage_437::pc::pc_cp437_to_unicode'>pc_cp437_to_unicode</a></td>
