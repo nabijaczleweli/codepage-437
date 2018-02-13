@@ -1,6 +1,5 @@
-use self::super::super::super::{ALL_CP437, ALL_UTF8};
-use codepage_437::BorrowFromCp437;
-use std::borrow::Cow;
+use self::super::super::{ALL_CP437, ALL_UTF8};
+use codepage_437::{CP437_CONTROL, FromCp437};
 
 
 macro_rules! array_test {
@@ -9,25 +8,15 @@ macro_rules! array_test {
 		fn $test_name() {
 			let mut buf = [0u8; $sz];
 			buf.copy_from_slice(&ALL_CP437[..$sz]);
-
-			let expected: String = ALL_UTF8.chars().take($sz).collect();
-			assert_eq!(Cow::borrow_from_cp437(&buf), expected);
-			assert_eq!(String::borrow_from_cp437(&buf), expected);
+			assert_eq!(String::from_cp437(buf, &CP437_CONTROL), ALL_UTF8.chars().take($sz).collect::<String>());
 		}
 	}
 }
 
 
 #[test]
-fn slice() {
-    assert_eq!(Cow::borrow_from_cp437(ALL_CP437), ALL_UTF8);
-    assert_eq!(String::borrow_from_cp437(ALL_CP437), ALL_UTF8);
-}
-
-#[test]
 fn vec() {
-    assert_eq!(Cow::borrow_from_cp437(&ALL_CP437.to_vec()), ALL_UTF8);
-    assert_eq!(String::borrow_from_cp437(&ALL_CP437.to_vec()), ALL_UTF8);
+    assert_eq!(String::from_cp437(ALL_CP437.to_vec(), &CP437_CONTROL), ALL_UTF8);
 }
 
 
