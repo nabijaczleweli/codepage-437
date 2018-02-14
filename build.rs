@@ -75,6 +75,7 @@ fn main() {
     for dir in fs::read_dir("dialect-specs").unwrap().map(Result::unwrap).filter(|f| f.file_type().unwrap().is_dir()) {
         let dialect_name_func = dir.file_name().to_str().unwrap().to_lowercase();
         let dialect_name_type = dir.file_name().to_str().unwrap().to_uppercase();
+        let dialect_name_init = dialect_name_type.clone() + "_INIT";
 
         let cp437_overlap_func = format!("{}_cp437_overlaps", dialect_name_func);
         let unicode_overlap_func = format!("{}_unicode_overlaps", dialect_name_func);
@@ -133,11 +134,7 @@ fn main() {
         writeln!(specs_rs, "}}").unwrap();
         writeln!(specs_rs, "").unwrap();
 
-        for line in BufReader::new(File::open(&documentation_md).unwrap()).lines().map(Result::unwrap) {
-            writeln!(specs_rs, "/// {}", line).unwrap();
-        }
-
-        writeln!(specs_rs, "pub static {}: Cp437Dialect = Cp437Dialect {{", dialect_name_type).unwrap();
+        writeln!(specs_rs, "const {}: Cp437Dialect = Cp437Dialect {{", dialect_name_init).unwrap();
         writeln!(specs_rs, "\tcp437_to_unicode: [").unwrap();
         for &(unicode, ref comment) in decode_array.iter() {
             write!(specs_rs, "\t\t\'\\u{{{:06X}}}\',", unicode as u32).unwrap();
@@ -154,6 +151,12 @@ fn main() {
         writeln!(specs_rs, "").unwrap();
         writeln!(specs_rs, "\tencode: {},", encode_func).unwrap();
         writeln!(specs_rs, "}};").unwrap();
+        writeln!(specs_rs, "").unwrap();
+
+        for line in BufReader::new(File::open(&documentation_md).unwrap()).lines().map(Result::unwrap) {
+            writeln!(specs_rs, "/// {}", line).unwrap();
+        }
+        writeln!(specs_rs, "pub static {}: Cp437Dialect = {};", dialect_name_type, dialect_name_init).unwrap();
 
         writeln!(specs_rs, "").unwrap();
         writeln!(specs_rs, "").unwrap();

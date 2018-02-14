@@ -4,7 +4,7 @@ use std::{cmp, fmt};
 
 /// Specifier for the specific kind of cp437.
 ///
-/// Dialects are instances of this type, aggregating free functions necessary to perform conversions.
+/// Dialects are instances of this type, aggregating data necessary to perform conversions.
 #[derive(Copy, Clone)]
 pub struct Cp437Dialect {
     cp437_to_unicode: [char; 256],
@@ -28,7 +28,7 @@ impl Cp437Dialect {
         (self.overlap_cp437)(cp437)
     }
 
-    /// Decode a single cp437 codepoint as a Unicode one.
+    /// Decode a single cp437 codepoint into a Unicode one.
     #[inline(always)]
     pub fn decode(&self, cp437: u8) -> char {
         self.cp437_to_unicode[cp437 as usize]
