@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -138,6 +139,8 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Conversion to and from codepage 437.</span>
 <span class="doccomment">//!</span>
@@ -231,7 +234,9 @@
 
 <span class="kw">mod</span> <span class="ident">decode</span>;
 <span class="kw">mod</span> <span class="ident">encode</span>;
+<span class="kw">mod</span> <span class="ident">dialect</span>;
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dialect</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">decode</span>::{<span class="ident">BorrowFromCp437</span>, <span class="ident">FromCp437</span>, <span class="ident">cp437_to_unicode</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">encode</span>::{<span class="ident">IntoCp437Error</span>, <span class="ident">Cp437Error</span>, <span class="ident">IntoCp437</span>, <span class="ident">ToCp437</span>, <span class="ident">unicode_to_cp437</span>};
 </pre>

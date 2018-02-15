@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `cp437_to_unicode` fn in crate `codepage_437`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, cp437_to_unicode">
+    <meta name="description" content="API documentation for the Rust `CP437_CONTROL` static in crate `codepage_437`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, CP437_CONTROL">
 
-    <title>codepage_437::cp437_to_unicode - Rust</title>
+    <title>codepage_437::CP437_CONTROL - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc fn">
+<body class="rustdoc static">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -30,7 +30,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>codepage_437</a></p><script>window.sidebarCurrent = {name: 'cp437_to_unicode', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>codepage_437</a></p><script>window.sidebarCurrent = {name: 'CP437_CONTROL', ty: 'static', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -45,20 +45,34 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='index.html'>codepage_437</a>::<wbr><a class="fn" href=''>cp437_to_unicode</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Static <a href='index.html'>codepage_437</a>::<wbr><a class="static" href=''>CP437_CONTROL</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/codepage_437/decode.rs.html#137-270' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn cp437_to_unicode(cp437: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a></pre><div class='docblock'><p>Convert a cp437 codepoint to a Unicode one.</p>
+               </span><a class='srclink' href='../src/codepage_437/home/travis/build/nabijaczleweli/codepage-437/target/debug/build/codepage-437-b7352fc0c1f66847/out/dialects.rs.html#330-336' title='goto source code'>[src]</a></span></h1>
+<pre class='rust static'>pub static CP437_CONTROL: <a class="struct" href="../codepage_437/struct.Cp437Dialect.html" title="struct codepage_437::Cp437Dialect">Cp437Dialect</a><code> = </code><code>Cp437Dialect{overlap_unicode: cp437_control_unicode_overlaps,
+             overlap_cp437: cp437_control_cp437_overlaps,
+             decode: cp437_control_decode,
+             encode: cp437_control_encode,}</code></pre><div class='docblock'><p><a href="http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT"><code>cp437_DOSLatinUS</code></a> as provided by the Unicode Consortium.</p>
 
-<p>Based on the <a href="http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT">cp437</a>
-table provided by the Unicode Consortium.</p>
+<p>Contains control characters in the <code>&#39;\x00&#39;..&#39;\x20&#39;</code> area.</p>
+
+<p>The decode table is additionally enriched from the the <a href="https://en.wikipedia.org/wiki/Code_page_437#Notes">variant table</a> on Wikipedia.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>Decoding:</p>
+
 <pre class="rust rust-example-rendered">
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cp437_to_unicode</span>(<span class="number">0x41</span>), <span class="string">&#39;A&#39;</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cp437_to_unicode</span>(<span class="number">0x91</span>), <span class="string">&#39;æ&#39;</span>);  <span class="comment">// LATIN SMALL LIGATURE AE</span></pre>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_CONTROL</span>.<span class="ident">decode</span>(<span class="number">0x41</span>), <span class="string">&#39;A&#39;</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_CONTROL</span>.<span class="ident">decode</span>(<span class="number">0x91</span>), <span class="string">&#39;æ&#39;</span>);  <span class="comment">// LATIN SMALL LIGATURE AE</span></pre>
+
+<p>Encoding:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_CONTROL</span>.<span class="ident">encode</span>(<span class="string">&#39;A&#39;</span>), <span class="prelude-val">Some</span>(<span class="number">0x41</span>));
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_CONTROL</span>.<span class="ident">encode</span>(<span class="string">&#39;æ&#39;</span>), <span class="prelude-val">Some</span>(<span class="number">0x91</span>));  <span class="comment">// LATIN SMALL LIGATURE AE</span>
+ 
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_CONTROL</span>.<span class="ident">encode</span>(<span class="string">&#39;ź&#39;</span>), <span class="prelude-val">None</span>);        <span class="comment">// LATIN SMALL LETTER Z WITH ACUTE</span></pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 

@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate codepage_437</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'codepage_437', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate codepage_437</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'codepage_437', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
     <nav class="sub">
@@ -48,7 +49,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/codepage_437/lib.rs.html#1-95' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/codepage_437/lib.rs.html#1-97' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Conversion to and from codepage 437.</p>
 
 <p>Use the <code>{Borrow,}FromCp437</code> traits to convert series of cp437 bytes to Unicode,
@@ -115,6 +116,13 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Cp437Dialect.html"
+                                  title='struct codepage_437::Cp437Dialect'>Cp437Dialect</a></td>
+                           <td class='docblock-short'>
+                                <p>Specifier for the specific kind of cp437.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Cp437Error.html"
                                   title='struct codepage_437::Cp437Error'>Cp437Error</a></td>
                            <td class='docblock-short'>
@@ -126,6 +134,14 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='struct codepage_437::IntoCp437Error'>IntoCp437Error</a></td>
                            <td class='docblock-short'>
                                 <p>A possible error value when converting a <code>String</code> into a cp437 byte vector.</p>
+                           </td>
+                       </tr></table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="static" href="static.CP437_CONTROL.html"
+                                  title='static codepage_437::CP437_CONTROL'>CP437_CONTROL</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT"><code>cp437_DOSLatinUS</code></a> as provided by the Unicode Consortium.</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
