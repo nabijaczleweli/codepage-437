@@ -150,6 +150,8 @@ fn main() {
         writeln!(specs_rs, "\toverlap_cp437: {},", cp437_overlap_func).unwrap();
         writeln!(specs_rs, "").unwrap();
         writeln!(specs_rs, "\tencode: {},", encode_func).unwrap();
+        writeln!(specs_rs, "").unwrap();
+        writeln!(specs_rs, "\tremaps: Cow::Borrowed(&[]),").unwrap();
         writeln!(specs_rs, "}};").unwrap();
         writeln!(specs_rs, "").unwrap();
 
