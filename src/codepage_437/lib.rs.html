@@ -155,7 +155,7 @@
 <span class="doccomment">//! Borrowing from a buffer:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use codepage_437::BorrowFromCp437;</span>
+<span class="doccomment">//! # use codepage_437::{CP437_CONTROL, BorrowFromCp437};</span>
 <span class="doccomment">//! # use std::borrow::Cow;</span>
 <span class="doccomment">//! # /*</span>
 <span class="doccomment">//! let data = &amp;[/* buffer acquired somewhere */];</span>
@@ -164,18 +164,18 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! /// in_unicode will be Cow::Borrowed if data only contains overlapping characters,</span>
 <span class="doccomment">//! ///                 or Cow::Owned if a conversion needed to have been made.</span>
-<span class="doccomment">//! let in_unicode = Cow::borrow_from_cp437(data);</span>
+<span class="doccomment">//! let in_unicode = Cow::borrow_from_cp437(data, &amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_unicode, &quot;Local news&quot;);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! // Also valid:</span>
-<span class="doccomment">//! let in_unicode = String::borrow_from_cp437(data);</span>
+<span class="doccomment">//! let in_unicode = String::borrow_from_cp437(data, &amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_unicode, &quot;Local news&quot;);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Moving out of a buffer:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use codepage_437::FromCp437;</span>
+<span class="doccomment">//! # use codepage_437::{CP437_CONTROL, FromCp437};</span>
 <span class="doccomment">//! # /*</span>
 <span class="doccomment">//! let data = vec![/* buffer moved in from somewhere */];</span>
 <span class="doccomment">//! # */</span>
@@ -183,48 +183,48 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! /// data is moved out of and zero-alloced into in_unicode</span>
 <span class="doccomment">//! ///      if it only contains overlapping characters</span>
-<span class="doccomment">//! let in_unicode = String::from_cp437(data);</span>
+<span class="doccomment">//! let in_unicode = String::from_cp437(data, &amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_unicode, &quot;Local news&quot;);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Borrowing from a `&amp;str`:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use codepage_437::ToCp437;</span>
+<span class="doccomment">//! # use codepage_437::{CP437_CONTROL, ToCp437};</span>
 <span class="doccomment">//! let data = &quot;Some string.&quot;;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! /// in_cp437 will be Cow::Borrowed if data only contains overlapping characters,</span>
 <span class="doccomment">//! ///                  Cow::Owned if a conversion needed to have been made,</span>
 <span class="doccomment">//! ///               or Err, if data can&#39;t be represented as cp437</span>
-<span class="doccomment">//! let in_cp437 = data.to_cp437();</span>
+<span class="doccomment">//! let in_cp437 = data.to_cp437(&amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! // Also valid (String is AsRef&lt;str&gt;):</span>
 <span class="doccomment">//! let data = &quot;Some string.&quot;.to_string();</span>
-<span class="doccomment">//! let in_cp437 = data.to_cp437();</span>
+<span class="doccomment">//! let in_cp437 = data.to_cp437(&amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Moving out of a `String`:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use codepage_437::IntoCp437;</span>
+<span class="doccomment">//! # use codepage_437::{CP437_CONTROL, IntoCp437};</span>
 <span class="doccomment">//! let data = &quot;Some string.&quot;.to_string();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! /// data is moved out of and zero-alloced into in_cp437</span>
 <span class="doccomment">//! ///      if it only contains overlapping characters</span>
-<span class="doccomment">//! let in_cp437 = data.into_cp437();</span>
+<span class="doccomment">//! let in_cp437 = data.into_cp437(&amp;CP437_CONTROL);</span>
 <span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Unrepresentable Unicode:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use codepage_437::ToCp437;</span>
+<span class="doccomment">//! # use codepage_437::{CP437_CONTROL, ToCp437};</span>
 <span class="doccomment">//! // Ż has no representation in cp437</span>
 <span class="doccomment">//! let data = &quot;Jurek żelaznym żurkiem żre żupan.&quot;;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! let result = data.to_cp437();</span>
+<span class="doccomment">//! let result = data.to_cp437(&amp;CP437_CONTROL);</span>
 <span class="doccomment">//! assert!(result.is_err());</span>
 <span class="doccomment">//! // result.unwrap_err() is Cp437Error (or IntoCp437Error for into_cp437()),</span>
 <span class="doccomment">//! //   with an API modeled after libstd&#39;s {From,}Utf8Error</span>
@@ -237,8 +237,8 @@
 <span class="kw">mod</span> <span class="ident">dialect</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dialect</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">decode</span>::{<span class="ident">BorrowFromCp437</span>, <span class="ident">FromCp437</span>, <span class="ident">cp437_to_unicode</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">encode</span>::{<span class="ident">IntoCp437Error</span>, <span class="ident">Cp437Error</span>, <span class="ident">IntoCp437</span>, <span class="ident">ToCp437</span>, <span class="ident">unicode_to_cp437</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">decode</span>::{<span class="ident">BorrowFromCp437</span>, <span class="ident">FromCp437</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">encode</span>::{<span class="ident">IntoCp437Error</span>, <span class="ident">Cp437Error</span>, <span class="ident">IntoCp437</span>, <span class="ident">ToCp437</span>};
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

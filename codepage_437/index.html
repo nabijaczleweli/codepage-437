@@ -30,7 +30,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate codepage_437</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'codepage_437', ty: 'mod', relpath: '../'};</script></div>
+        <p class='location'>Crate codepage_437</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'codepage_437', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
     <nav class="sub">
@@ -66,10 +66,10 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 
 <span class="doccomment">/// in_unicode will be Cow::Borrowed if data only contains overlapping characters,</span>
 <span class="doccomment">///                 or Cow::Owned if a conversion needed to have been made.</span>
-<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">Cow</span>::<span class="ident">borrow_from_cp437</span>(<span class="ident">data</span>);
+<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">Cow</span>::<span class="ident">borrow_from_cp437</span>(<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);
 
 <span class="comment">// Also valid:</span>
-<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">borrow_from_cp437</span>(<span class="ident">data</span>);</pre>
+<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">borrow_from_cp437</span>(<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
 
 <p>Moving out of a buffer:</p>
 
@@ -78,7 +78,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 
 <span class="doccomment">/// data is moved out of and zero-alloced into in_unicode</span>
 <span class="doccomment">///      if it only contains overlapping characters</span>
-<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_cp437</span>(<span class="ident">data</span>);</pre>
+<span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_cp437</span>(<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
 
 <p>Borrowing from a <code>&amp;str</code>:</p>
 
@@ -88,11 +88,11 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 <span class="doccomment">/// in_cp437 will be Cow::Borrowed if data only contains overlapping characters,</span>
 <span class="doccomment">///                  Cow::Owned if a conversion needed to have been made,</span>
 <span class="doccomment">///               or Err, if data can&#39;t be represented as cp437</span>
-<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>();
+<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);
 
 <span class="comment">// Also valid (String is AsRef&lt;str&gt;):</span>
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;Some string.&quot;</span>.<span class="ident">to_string</span>();
-<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>();</pre>
+<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
 
 <p>Moving out of a <code>String</code>:</p>
 
@@ -101,7 +101,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 
 <span class="doccomment">/// data is moved out of and zero-alloced into in_cp437</span>
 <span class="doccomment">///      if it only contains overlapping characters</span>
-<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">into_cp437</span>();</pre>
+<span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">into_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
 
 <p>Unrepresentable Unicode:</p>
 
@@ -109,7 +109,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 <span class="comment">// Ż has no representation in cp437</span>
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;Jurek żelaznym żurkiem żre żupan.&quot;</span>;
 
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>();
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>());
 <span class="comment">// result.unwrap_err() is Cp437Error (or IntoCp437Error for into_cp437()),</span>
 <span class="comment">//   with an API modeled after libstd&#39;s {From,}Utf8Error</span></pre>
@@ -171,21 +171,6 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='trait codepage_437::ToCp437'>ToCp437</a></td>
                            <td class='docblock-short'>
                                 <p>Borrow (if possible) Unicode data as cp437 data.</p>
-                           </td>
-                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.cp437_to_unicode.html"
-                                  title='fn codepage_437::cp437_to_unicode'>cp437_to_unicode</a></td>
-                           <td class='docblock-short'>
-                                <p>Convert a cp437 codepoint to a Unicode one.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.unicode_to_cp437.html"
-                                  title='fn codepage_437::unicode_to_cp437'>unicode_to_cp437</a></td>
-                           <td class='docblock-short'>
-                                <p>Hopefully convert a Unicode codepoint to a cp437 one.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
