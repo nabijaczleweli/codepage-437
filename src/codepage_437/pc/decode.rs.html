@@ -311,6 +311,8 @@
 <span id="266">266</span>
 <span id="267">267</span>
 <span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -336,6 +338,7 @@
 <span class="doccomment">/// assert_eq!(String::from_pc_cp437(cp437), unicode);  // cp437 is moved out of</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FromPcCp437</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Sized</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Do the conversion.</span>
     <span class="kw">fn</span> <span class="ident">from_pc_cp437</span>(<span class="ident">cp437</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
@@ -402,6 +405,7 @@
 <span class="doccomment">/// assert_eq!(Cow::borrow_from_pc_cp437(&amp;cp437[..]), unicode);</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BorrowFromPcCp437</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Do the conversion.</span>
     <span class="kw">fn</span> <span class="ident">borrow_from_pc_cp437</span>(<span class="ident">cp437</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 

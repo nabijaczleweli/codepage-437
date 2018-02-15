@@ -89,11 +89,63 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Conversion to and from [`cp437_DOSLatinUS`](http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Use the `{Borrow,}FromPcCp437` traits to convert series of cp437 bytes to Unicode,</span>
 <span class="doccomment">//! and the `pc_cp437_to_unicode()` function to decode a single codepoint.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Use the `{Into,To}PcCp437` traits to convert Unicode to a series of cp437 bytes,</span>
+<span class="doccomment">//! and the `unicode_to_pc_cp437()` function to encode a single codepoint.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -131,11 +183,57 @@
 <span class="doccomment">//! let in_unicode = String::from_pc_cp437(data);</span>
 <span class="doccomment">//! # assert_eq!(in_unicode, &quot;Local news&quot;);</span>
 <span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Borrowing from a `&amp;str`:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! # use codepage_437::pc::ToPcCp437;</span>
+<span class="doccomment">//! let data = &quot;Some string.&quot;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// in_cp437 will be Cow::Borrowed if data only contains overlapping characters,</span>
+<span class="doccomment">//! ///                  Cow::Owned if a conversion needed to have been made,</span>
+<span class="doccomment">//! ///               or Err, if data can&#39;t be represented as cp437</span>
+<span class="doccomment">//! let in_cp437 = data.to_pc_cp437();</span>
+<span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! // Also valid (String is AsRef&lt;str&gt;):</span>
+<span class="doccomment">//! let data = &quot;Some string.&quot;.to_string();</span>
+<span class="doccomment">//! let in_cp437 = data.to_pc_cp437();</span>
+<span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Moving out of a `String`:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! # use codepage_437::pc::IntoPcCp437;</span>
+<span class="doccomment">//! let data = &quot;Some string.&quot;.to_string();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// data is moved out of and zero-alloced into in_cp437</span>
+<span class="doccomment">//! ///      if it only contains overlapping characters</span>
+<span class="doccomment">//! let in_cp437 = data.into_pc_cp437();</span>
+<span class="doccomment">//! # assert_eq!(in_cp437, Ok([0x53, 0x6F, 0x6D, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x2E][..].into()));</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Unrepresentable Unicode:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! # use codepage_437::pc::ToPcCp437;</span>
+<span class="doccomment">//! // Ż has no representation in cp437</span>
+<span class="doccomment">//! let data = &quot;Jurek żelaznym żurkiem żre żupan.&quot;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let result = data.to_pc_cp437();</span>
+<span class="doccomment">//! assert!(result.is_err());</span>
+<span class="doccomment">//! // result.unwrap_err() is PcCp437Error (or IntoPcCp437Error for into_pc_cp437()),</span>
+<span class="doccomment">//! //   with an API modeled after libstd&#39;s {From,}Utf8Error</span>
+<span class="doccomment">//! # assert_eq!(result.unwrap_err().representable_up_to, 6);</span>
+<span class="doccomment">//! ```</span>
 
 
 <span class="kw">mod</span> <span class="ident">decode</span>;
+<span class="kw">mod</span> <span class="ident">encode</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">decode</span>::{<span class="ident">BorrowFromPcCp437</span>, <span class="ident">FromPcCp437</span>, <span class="ident">pc_cp437_to_unicode</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">encode</span>::{<span class="ident">IntoPcCp437Error</span>, <span class="ident">PcCp437Error</span>, <span class="ident">IntoPcCp437</span>, <span class="ident">ToPcCp437</span>, <span class="ident">unicode_to_pc_cp437</span>};
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
