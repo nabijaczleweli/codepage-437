@@ -1002,6 +1002,14 @@
 <span id="956">956</span>
 <span id="957">957</span>
 <span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
 </pre><pre class="rust ">
 
 
@@ -1171,32 +1179,7 @@
 	})
 }
 
-<span class="doccomment">/// [`cp437_DOSLatinUS`](http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT) as provided by the Unicode Consortium.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Contains control characters in the `&#39;\x00&#39;..&#39;\x20&#39;` area.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The decode table is additionally enriched from the the [variant table](https://en.wikipedia.org/wiki/Code_page_437#Notes) on Wikipedia.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Decoding:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use codepage_437::CP437_CONTROL;</span>
-<span class="doccomment">/// assert_eq!(CP437_CONTROL.decode(0x41), &#39;A&#39;);</span>
-<span class="doccomment">/// assert_eq!(CP437_CONTROL.decode(0x91), &#39;æ&#39;);  // LATIN SMALL LIGATURE AE</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Encoding:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use codepage_437::CP437_CONTROL;</span>
-<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;A&#39;), Some(0x41));</span>
-<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;æ&#39;), Some(0x91));  // LATIN SMALL LIGATURE AE</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;ź&#39;), None);        // LATIN SMALL LETTER Z WITH ACUTE</span>
-<span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">CP437_CONTROL</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">Cp437Dialect</span> {
+<span class="kw">const</span> <span class="ident">CP437_CONTROL_INIT</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">Cp437Dialect</span> {
 	<span class="ident">cp437_to_unicode</span>: [
 		<span class="string">&#39;\u{000000}&#39;</span>,
 		<span class="string">&#39;\u{000001}&#39;</span>,
@@ -1460,7 +1443,36 @@
 	<span class="ident">overlap_cp437</span>: <span class="ident">cp437_control_cp437_overlaps</span>,
 
 	<span class="ident">encode</span>: <span class="ident">cp437_control_encode</span>,
+
+	<span class="ident">remaps</span>: <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="kw-2">&amp;</span>[]),
 };
+
+<span class="doccomment">/// [`cp437_DOSLatinUS`](http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT) as provided by the Unicode Consortium.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Contains control characters in the `&#39;\x00&#39;..&#39;\x20&#39;` area.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// The decode table is additionally enriched from the the [variant table](https://en.wikipedia.org/wiki/Code_page_437#Notes) on Wikipedia.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Decoding:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use codepage_437::CP437_CONTROL;</span>
+<span class="doccomment">/// assert_eq!(CP437_CONTROL.decode(0x41), &#39;A&#39;);</span>
+<span class="doccomment">/// assert_eq!(CP437_CONTROL.decode(0x91), &#39;æ&#39;);  // LATIN SMALL LIGATURE AE</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Encoding:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use codepage_437::CP437_CONTROL;</span>
+<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;A&#39;), Some(0x41));</span>
+<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;æ&#39;), Some(0x91));  // LATIN SMALL LIGATURE AE</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// assert_eq!(CP437_CONTROL.encode(&#39;ź&#39;), None);        // LATIN SMALL LETTER Z WITH ACUTE</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">CP437_CONTROL</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">CP437_CONTROL_INIT</span>;
 
 
 <span class="comment">// dialect-specs/cp437_control end</span>
@@ -1666,32 +1678,7 @@
 	})
 }
 
-<span class="doccomment">/// cp437 [with wingdings](https://en.wikipedia.org/wiki/Code_page_437#Character_set), as seen on Wikipedia.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Contains wingdings in the `&#39;\x00&#39;..&#39;\x20&#39;` area.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The decode table is additionally enriched from the the [variant table](https://en.wikipedia.org/wiki/Code_page_437#Notes).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Decoding:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use codepage_437::CP437_WINGDINGS;</span>
-<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.decode(0x41), &#39;A&#39;);</span>
-<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.decode(0x02), &#39;☻&#39;);  // BLACK SMILING FACE</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Encoding:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use codepage_437::CP437_WINGDINGS;</span>
-<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;A&#39;), Some(0x41));</span>
-<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;☻&#39;), Some(0x02));  // BLACK SMILING FACE</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;ź&#39;), None);        // LATIN SMALL LETTER Z WITH ACUTE</span>
-<span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">CP437_WINGDINGS</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">Cp437Dialect</span> {
+<span class="kw">const</span> <span class="ident">CP437_WINGDINGS_INIT</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">Cp437Dialect</span> {
 	<span class="ident">cp437_to_unicode</span>: [
 		<span class="string">&#39;\u{000000}&#39;</span>,
 		<span class="string">&#39;\u{00263A}&#39;</span>,  <span class="comment">// WHITE SMILING FACE</span>
@@ -1955,7 +1942,36 @@
 	<span class="ident">overlap_cp437</span>: <span class="ident">cp437_wingdings_cp437_overlaps</span>,
 
 	<span class="ident">encode</span>: <span class="ident">cp437_wingdings_encode</span>,
+
+	<span class="ident">remaps</span>: <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="kw-2">&amp;</span>[]),
 };
+
+<span class="doccomment">/// cp437 [with wingdings](https://en.wikipedia.org/wiki/Code_page_437#Character_set), as seen on Wikipedia.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Contains wingdings in the `&#39;\x00&#39;..&#39;\x20&#39;` area.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// The decode table is additionally enriched from the the [variant table](https://en.wikipedia.org/wiki/Code_page_437#Notes).</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Decoding:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use codepage_437::CP437_WINGDINGS;</span>
+<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.decode(0x41), &#39;A&#39;);</span>
+<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.decode(0x02), &#39;☻&#39;);  // BLACK SMILING FACE</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Encoding:</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use codepage_437::CP437_WINGDINGS;</span>
+<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;A&#39;), Some(0x41));</span>
+<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;☻&#39;), Some(0x02));  // BLACK SMILING FACE</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// assert_eq!(CP437_WINGDINGS.encode(&#39;ź&#39;), None);        // LATIN SMALL LETTER Z WITH ACUTE</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">CP437_WINGDINGS</span>: <span class="ident">Cp437Dialect</span> <span class="op">=</span> <span class="ident">CP437_WINGDINGS_INIT</span>;
 
 
 <span class="comment">// dialect-specs/cp437_wingdings end</span>
