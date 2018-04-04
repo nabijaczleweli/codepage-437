@@ -10,8 +10,11 @@
     <title>codepage_437 - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Crate codepage_437</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'codepage_437', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,14 +61,11 @@
                    </a>
                </span><a class='srclink' href='../src/codepage_437/lib.rs.html#1-97' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Conversion to and from codepage 437.</p>
-
 <p>Use the <code>{Borrow,}FromCp437</code> traits to convert series of cp437 bytes to Unicode,
 and the <code>cp437_to_unicode()</code> function to decode a single codepoint.</p>
-
 <p>Use the <code>{Into,To}Cp437</code> traits to convert Unicode to a series of cp437 bytes,
 and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>Borrowing from a buffer:</p>
 
 <pre class="rust rust-example-rendered">
@@ -70,7 +77,6 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 
 <span class="comment">// Also valid:</span>
 <span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">borrow_from_cp437</span>(<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
-
 <p>Moving out of a buffer:</p>
 
 <pre class="rust rust-example-rendered">
@@ -79,7 +85,6 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 <span class="doccomment">/// data is moved out of and zero-alloced into in_unicode</span>
 <span class="doccomment">///      if it only contains overlapping characters</span>
 <span class="kw">let</span> <span class="ident">in_unicode</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_cp437</span>(<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
-
 <p>Borrowing from a <code>&amp;str</code>:</p>
 
 <pre class="rust rust-example-rendered">
@@ -93,7 +98,6 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 <span class="comment">// Also valid (String is AsRef&lt;str&gt;):</span>
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;Some string.&quot;</span>.<span class="ident">to_string</span>();
 <span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
-
 <p>Moving out of a <code>String</code>:</p>
 
 <pre class="rust rust-example-rendered">
@@ -102,7 +106,6 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
 <span class="doccomment">/// data is moved out of and zero-alloced into in_cp437</span>
 <span class="doccomment">///      if it only contains overlapping characters</span>
 <span class="kw">let</span> <span class="ident">in_cp437</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">into_cp437</span>(<span class="kw-2">&amp;</span><span class="ident">CP437_CONTROL</span>);</pre>
-
 <p>Unrepresentable Unicode:</p>
 
 <pre class="rust rust-example-rendered">
@@ -120,6 +123,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='struct codepage_437::Cp437Dialect'>Cp437Dialect</a></td>
                            <td class='docblock-short'>
                                 <p>Specifier for the specific kind of cp437.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -127,6 +131,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='struct codepage_437::Cp437Error'>Cp437Error</a></td>
                            <td class='docblock-short'>
                                 <p>Errors which can occur when attempting to interpret a string as a sequence of cp437 codepoints.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -134,6 +139,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='struct codepage_437::IntoCp437Error'>IntoCp437Error</a></td>
                            <td class='docblock-short'>
                                 <p>A possible error value when converting a <code>String</code> into a cp437 byte vector.</p>
+
                            </td>
                        </tr></table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
 <table>
@@ -142,6 +148,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='static codepage_437::CP437_CONTROL'>CP437_CONTROL</a></td>
                            <td class='docblock-short'>
                                 <p><a href="http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP437.TXT"><code>cp437_DOSLatinUS</code></a> as provided by the Unicode Consortium.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -149,6 +156,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='static codepage_437::CP437_WINGDINGS'>CP437_WINGDINGS</a></td>
                            <td class='docblock-short'>
                                 <p>cp437 <a href="https://en.wikipedia.org/wiki/Code_page_437#Character_set">with wingdings</a>, as seen on Wikipedia.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -157,6 +165,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='trait codepage_437::BorrowFromCp437'>BorrowFromCp437</a></td>
                            <td class='docblock-short'>
                                 <p>Try to borrow data encoded in cp437 as a Unicode container of the specified type.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -164,6 +173,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='trait codepage_437::FromCp437'>FromCp437</a></td>
                            <td class='docblock-short'>
                                 <p>Move data encoded in cp437 to a Unicode container of the specified type.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -171,6 +181,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='trait codepage_437::IntoCp437'>IntoCp437</a></td>
                            <td class='docblock-short'>
                                 <p>Move Unicode data to a container of cp437 data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -178,6 +189,7 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                                   title='trait codepage_437::ToCp437'>ToCp437</a></td>
                            <td class='docblock-short'>
                                 <p>Borrow (if possible) Unicode data as cp437 data.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -192,20 +204,22 @@ and the <code>unicode_to_cp437()</code> function to encode a single codepoint.</
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

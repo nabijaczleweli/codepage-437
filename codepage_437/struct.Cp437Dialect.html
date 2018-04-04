@@ -10,8 +10,11 @@
     <title>codepage_437::Cp437Dialect - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct Cp437Dialect</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.overlap_unicode">overlap_unicode</a><a href="#method.overlap_cp437">overlap_cp437</a><a href="#method.decode">decode</a><a href="#method.encode">encode</a><a href="#method.remap">remap</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-Hash">Hash</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Ord">Ord</a><a href="#impl-PartialOrd">PartialOrd</a></div></div><p class='location'><a href='index.html'>codepage_437</a></p><script>window.sidebarCurrent = {name: 'Cp437Dialect', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,7 +61,6 @@
                    </a>
                </span><a class='srclink' href='../src/codepage_437/dialect.rs.html#10-20' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Cp437Dialect { /* fields omitted */ }</pre><div class='docblock'><p>Specifier for the specific kind of cp437.</p>
-
 <p>Dialects are instances of this type, aggregating data necessary to perform conversions.</p>
 </div>
                     <h2 id='methods' class='small-section-header'>
@@ -68,8 +77,7 @@
 <div class='docblock'><p>Try to encode a single Unicode codepoint as a cp437 one.</p>
 </div><h4 id='method.remap' class="method"><span id='remap.v' class='invisible'><code>pub fn <a href='#method.remap' class='fnname'>remap</a>(&amp;mut self, cp437: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, unicode: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; &amp;mut <a class="struct" href="../codepage_437/struct.Cp437Dialect.html" title="struct codepage_437::Cp437Dialect">Cp437Dialect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/codepage_437/dialect.rs.html#61-65' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Map the specified cp437 codepoint mapped to the specified unicode character instead.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>Remap <code>√</code> to <code>✓</code>:</p>
 
 <pre class="rust rust-example-rendered">
@@ -132,20 +140,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

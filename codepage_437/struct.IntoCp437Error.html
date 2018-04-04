@@ -10,8 +10,11 @@
     <title>codepage_437::IntoCp437Error - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct IntoCp437Error</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.as_str">as_str</a><a href="#method.into_string">into_string</a><a href="#method.cp437_error">cp437_error</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-Hash">Hash</a><a href="#impl-Eq">Eq</a><a href="#impl-Ord">Ord</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-PartialOrd">PartialOrd</a></div></div><p class='location'><a href='index.html'>codepage_437</a></p><script>window.sidebarCurrent = {name: 'IntoCp437Error', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,18 +61,15 @@
                    </a>
                </span><a class='srclink' href='../src/codepage_437/encode.rs.html#55-58' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct IntoCp437Error { /* fields omitted */ }</pre><div class='docblock'><p>A possible error value when converting a <code>String</code> into a cp437 byte vector.</p>
-
 <p>This type is the error type for the <a href="trait.IntoCp437.html#tymethod.into_cp437"><code>into_cp437()</code></a>
 function on <a href="trait.IntoCp437.html"><code>IntoCp437</code></a>. It is designed in such a way to carefully avoid reallocations:
 the <a href="#method.into_string"><code>into_string()</code></a> function will give back the String that was used
 in the conversion attempt.</p>
-
 <p>The <a href="struct.Cp437Error.html"><code>Cp437Error</code></a> type represents an error that may
-occur when converting a <code>&amp;str</code> to a sequence of <code>u8</code>s. In this sense, it&#39;s
+occur when converting a <code>&amp;str</code> to a sequence of <code>u8</code>s. In this sense, it's
 an analogue to <code>IntoCp437Error</code>, and you can get one from a <code>IntoCp437Error</code>
 through the <a href="#method.cp437_error"><code>cp437_error()</code></a> function.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="comment">// some unrepresentable chracters, in a String</span>
 <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="string">&quot;Eżektor&quot;</span>.<span class="ident">to_string</span>();
@@ -78,8 +85,7 @@ through the <a href="#method.cp437_error"><code>cp437_error()</code></a> functio
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../codepage_437/struct.IntoCp437Error.html" title="struct codepage_437::IntoCp437Error">IntoCp437Error</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/codepage_437/encode.rs.html#60-121' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.as_str' class="method"><span id='as_str.v' class='invisible'><code>pub fn <a href='#method.as_str' class='fnname'>as_str</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/codepage_437/encode.rs.html#74-76' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a <code>&amp;str</code> that was attempted to convert to cp437.</p>
-
-<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="comment">// some unrepresentable chracters, in a String</span>
 <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="string">&quot;Eżektor&quot;</span>.<span class="ident">to_string</span>();
@@ -89,12 +95,10 @@ through the <a href="#method.cp437_error"><code>cp437_error()</code></a> functio
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">unwrap_err</span>().<span class="ident">as_str</span>(), <span class="string">&quot;Eżektor&quot;</span>);</pre>
 </div><h4 id='method.into_string' class="method"><span id='into_string.v' class='invisible'><code>pub fn <a href='#method.into_string' class='fnname'>into_string</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/codepage_437/encode.rs.html#95-97' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the <code>String</code> that was attempted to convert to cp437.</p>
-
 <p>This function is carefully constructed to avoid allocation. It will
 consume the error, moving out the string, so that a copy of the string
 does not need to be made.</p>
-
-<h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="comment">// some unrepresentable chracters, in a String</span>
 <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="string">&quot;Eżektor&quot;</span>.<span class="ident">to_string</span>();
@@ -104,13 +108,11 @@ does not need to be made.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">unwrap_err</span>().<span class="ident">into_string</span>(), <span class="string">&quot;Eżektor&quot;</span>.<span class="ident">to_string</span>());</pre>
 </div><h4 id='method.cp437_error' class="method"><span id='cp437_error.v' class='invisible'><code>pub fn <a href='#method.cp437_error' class='fnname'>cp437_error</a>(&amp;self) -&gt; <a class="struct" href="../codepage_437/struct.Cp437Error.html" title="struct codepage_437::Cp437Error">Cp437Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/codepage_437/encode.rs.html#118-120' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Fetch a <code>Cp437Error</code> to get more details about the conversion failure.</p>
-
 <p>The <a href="struct.Cp437Error.html"><code>Cp437Error</code></a> type represents an error that may
-occur when converting a <code>&amp;str</code> to a sequence of <code>u8</code>s. In this sense, it&#39;s
+occur when converting a <code>&amp;str</code> to a sequence of <code>u8</code>s. In this sense, it's
 an analogue to <code>IntoCp437Error</code>. See its documentation for more details
 on using it.</p>
-
-<h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="comment">// some unrepresentable chracters, in a String</span>
 <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="string">&quot;Eżektor&quot;</span>.<span class="ident">to_string</span>();
@@ -173,20 +175,22 @@ on using it.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

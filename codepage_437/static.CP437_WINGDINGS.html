@@ -10,8 +10,11 @@
     <title>codepage_437::CP437_WINGDINGS - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'><a href='index.html'>codepage_437</a></p><script>window.sidebarCurrent = {name: 'CP437_WINGDINGS', ty: 'static', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,20 +59,16 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/codepage_437/home/travis/build/nabijaczleweli/codepage-437/target/debug/build/codepage-437-b7352fc0c1f66847/out/dialects.rs.html#961' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/codepage_437/home/travis/build/nabijaczleweli/codepage-437/target/debug/build/codepage-437-3eaf4d7d4ed80867/out/dialects.rs.html#961' title='goto source code'>[src]</a></span></h1>
 <pre class='rust static'>pub static CP437_WINGDINGS: <a class="struct" href="../codepage_437/struct.Cp437Dialect.html" title="struct codepage_437::Cp437Dialect">Cp437Dialect</a><code> = </code><code>CP437_WINGDINGS_INIT</code></pre><div class='docblock'><p>cp437 <a href="https://en.wikipedia.org/wiki/Code_page_437#Character_set">with wingdings</a>, as seen on Wikipedia.</p>
-
-<p>Contains wingdings in the <code>&#39;\x00&#39;..&#39;\x20&#39;</code> area.</p>
-
+<p>Contains wingdings in the <code>'\x00'..'\x20'</code> area.</p>
 <p>The decode table is additionally enriched from the the <a href="https://en.wikipedia.org/wiki/Code_page_437#Notes">variant table</a>.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>Decoding:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_WINGDINGS</span>.<span class="ident">decode</span>(<span class="number">0x41</span>), <span class="string">&#39;A&#39;</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">CP437_WINGDINGS</span>.<span class="ident">decode</span>(<span class="number">0x02</span>), <span class="string">&#39;☻&#39;</span>);  <span class="comment">// BLACK SMILING FACE</span></pre>
-
 <p>Encoding:</p>
 
 <pre class="rust rust-example-rendered">
@@ -83,20 +89,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
